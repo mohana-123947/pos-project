@@ -1,0 +1,3 @@
+pos.db
+*.db__pycache__/
+.env

@@ -98,13 +98,20 @@ with app.app_context():
 def home():
     return render_template('index.html')
 
-@app.route('/api/login', methods=['POST'])
+from flask import request, redirect, url_for, render_template
+@app.route('/login', methods=['POST'])
 def login():
-    data = request.json
-    user = User.query.filter_by(username=data.get('username')).first()
-    if user and user.password == data.get('password'):
-        return jsonify({'message': 'success'}), 200
-    return jsonify({'message': 'Invalid credentials'}), 401
+        username = request.form['username']
+        password = request.form['password']
+        
+        # TEMP DEMO LOGIN
+        if username == 'admin' and password == 'admin':
+            return redirect(url_for('dashboard'))
+        else:
+            return render_template('index.html', error="Invalid credentials")
+        @app.route('/dashboard')
+        def dashboard():
+                return render_template('dashboard.html')
 
 @app.route('/api/products', methods=['GET', 'POST'])
 def handle_products():
